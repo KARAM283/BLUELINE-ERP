@@ -1,0 +1,86 @@
+{
+  "name": "blue-line-visa-crm",
+  "version": "1.0.2",
+  "private": true,
+  "description": "Offline visa application CRM for Blue Line Travel",
+  "author": "Blue Line Travel",
+  "main": "out/main/index.js",
+  "scripts": {
+    "dev": "electron-vite dev",
+    "start": "electron .",
+    "build": "electron-vite build",
+    "test": "node scripts/run-tests.cjs",
+    "postinstall": "electron-rebuild --force --which-module better-sqlite3",
+    "rebuild:electron": "electron-rebuild --force --which-module better-sqlite3",
+    "rebuild:node": "npm rebuild better-sqlite3",
+    "package:win": "npm run build && npm run rebuild:electron && electron-builder --win nsis"
+  },
+  "dependencies": {
+    "@google/genai": "^3.0.0",
+    "@tesseract.js-data/ara": "^1.0.0",
+    "@tesseract.js-data/eng": "^1.0.0",
+    "better-sqlite3": "^12.2.0",
+    "lucide-react": "^0.468.0",
+    "react": "^19.1.0",
+    "react-dom": "^19.1.0",
+    "selfsigned": "^5.5.0",
+    "tesseract.js": "^6.0.1",
+    "yazl": "^3.3.1"
+  },
+  "devDependencies": {
+    "@electron-toolkit/preload": "^3.0.2",
+    "@electron-toolkit/tsconfig": "^1.0.1",
+    "@electron/rebuild": "^4.2.1",
+    "@types/better-sqlite3": "^7.6.13",
+    "@types/node": "^22.15.30",
+    "@types/react": "^19.1.6",
+    "@types/react-dom": "^19.1.6",
+    "@types/yazl": "^3.3.1",
+    "@vitejs/plugin-react": "^4.6.0",
+    "electron": "^37.2.6",
+    "electron-builder": "^26.0.12",
+    "electron-vite": "^4.0.0",
+    "typescript": "^5.8.3",
+    "vite": "^6.3.5",
+    "vitest": "^3.2.4"
+  },
+  "build": {
+    "appId": "com.bluelinetravel.visacrm",
+    "productName": "Blue Line Visa CRM",
+    "npmRebuild": false,
+    "directories": {
+      "output": "release"
+    },
+    "files": [
+      "out/main/**/*",
+      "out/preload/**/*",
+      "out/renderer/**/*",
+      "package.json"
+    ],
+    "asarUnpack": [
+      "**/better-sqlite3/**/*",
+      "node_modules/tesseract.js/**/*",
+      "node_modules/tesseract.js-core/**/*",
+      "node_modules/@tesseract.js-data/**/*"
+    ],
+    "win": {
+      "target": "nsis",
+      "artifactName": "BlueLine-Visa-CRM-Setup-${version}.${ext}",
+      "icon": "assets/icon.ico"
+    },
+    "nsis": {
+      "oneClick": false,
+      "allowToChangeInstallationDirectory": true,
+      "createDesktopShortcut": true,
+      "createStartMenuShortcut": true,
+      "installerIcon": "assets/icon.ico",
+      "uninstallerIcon": "assets/icon.ico",
+      "deleteAppDataOnUninstall": false
+    }
+  },
+  "allowScripts": {
+    "electron@37.10.3": true,
+    "better-sqlite3@12.11.1": true,
+    "esbuild@0.25.12": true
+  }
+}
